@@ -1,6 +1,5 @@
 import math
 from dataclasses import dataclass
-from os import close
 from typing import List, Optional
 from model.data import Node
 from model.calc_node import CalcNode
@@ -48,7 +47,6 @@ class Astar():
                     closed_candidate = self.__find_candidate(close_list, candidate)
                     if closed_candidate is not None:
                         if total < closed_candidate.total:
-                            print('remove')
                             close_list.remove(closed_candidate)
                             closed_candidate.total = total
                             closed_candidate.parent = target
@@ -59,8 +57,6 @@ class Astar():
                         heapq.heappush(open_list, candidate)    
 
         return [li.node for li in reversed(list(target))]
-
-
 
     def __heuristic(self, node: CalcNode) -> float:
         return math.sqrt((node.x - self.goal.x)**2 + (node.y - self.goal.y)**2)
